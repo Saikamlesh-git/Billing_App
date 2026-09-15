@@ -7,9 +7,9 @@ export default function Header({ hotelName, activeView, onChangeHotel, onViewCha
     { key: "products", label: "Products", icon: "📦" },
   ];
 
-  // Theme: "dark" or "light"
+  // Theme: "light" (default) or "dark"
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("cb_theme") || "dark";
+    return localStorage.getItem("cb_theme") || "light";
   });
 
   useEffect(() => {

@@ -997,56 +997,99 @@
 
   /* Dashboard */
   .dashboard-stats {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
-    padding: var(--space-3) var(--space-3) 0;
+    padding: 10px 12px 0;
   }
   .stat-card {
-    padding: var(--space-3);
-    gap: 10px;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
+    padding: 8px 10px;
+    gap: 8px;
+    flex-direction: row;
+    align-items: center;
+    border-radius: var(--radius-md);
+    min-height: 48px;
   }
   .stat-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 1rem;
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+  .stat-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
   }
   .stat-value {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.1;
   }
   .stat-label {
-    font-size: 0.66rem;
+    font-size: 0.60rem;
+    letter-spacing: 0.02em;
+    margin-top: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* Billing view */
   .billing-view {
-    padding: var(--space-3);
-    gap: var(--space-3);
-    padding-bottom: 150px;
+    padding: 10px 12px;
+    gap: 12px;
+    padding-bottom: 140px;
+  }
+
+  /* Search & Toolbar */
+  .search-bar-wrap {
+    margin-bottom: 0;
+  }
+  .category-tabs {
+    padding: 2px 0 4px;
+    gap: 6px;
+  }
+  .cat-tab {
+    padding: 6px 12px;
+    font-size: 0.78rem;
   }
 
   /* Product grid */
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
   .product-card {
-    padding: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: var(--radius-md);
+  }
+  .product-category {
+    font-size: 0.65rem;
   }
   .product-name {
     font-size: 0.82rem;
+    font-weight: 700;
   }
   .product-price {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin: 4px 0;
   }
   .qty-btn {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
   }
   .qty-input {
-    width: 44px !important;
+    width: 40px !important;
+    height: 32px;
+    font-size: 0.82rem;
+    padding: 0 !important;
   }
 
   /* Cart: make items more compact */
@@ -1130,8 +1173,9 @@
     grid-template-columns: 1fr 1fr;
     gap: 6px;
   }
-  .stat-card { padding: 10px; }
-  .stat-value { font-size: 0.95rem; }
+  .stat-card { padding: 6px 8px; }
+  .stat-value { font-size: 0.88rem; }
+  .stat-label { font-size: 0.58rem; }
   .dashboard-stats { gap: 6px; }
   .mobile-nav-btn { padding: 6px 14px; }
 }

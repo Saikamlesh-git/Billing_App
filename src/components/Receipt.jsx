@@ -90,7 +90,7 @@ export default function Receipt({ bill, onClose, onNewBill, onChangeHotel }) {
             {/* Meta */}
             <div className="receipt-meta">
               <div className="receipt-meta-row">
-                <span className="receipt-meta-label">Bill No</span>
+                <span className="receipt-meta-label">Invoice No</span>
                 <span className="receipt-meta-value" style={{ fontFamily: "monospace", color: "#4f7cff" }}>{bill.invoiceNo}</span>
               </div>
               <div className="receipt-meta-row">

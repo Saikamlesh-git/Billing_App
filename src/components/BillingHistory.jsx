@@ -58,7 +58,7 @@ export default function BillingHistory({ history, onHistoryChange }) {
             <table>
               <thead>
                 <tr>
-                  <th>Bill No</th>
+                  <th>Invoice No</th>
                   <th>Hotel</th>
                   <th>Date</th>
                   <th>Time</th>
