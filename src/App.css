@@ -9,7 +9,6 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 /* ─── Billing View ──────────────────────────────────────────────────────── */
@@ -95,25 +94,33 @@
   color: var(--text-secondary);
   cursor: pointer;
   transition: all var(--transition);
-  flex-shrink: 0;
+  flex: 1;
+  min-width: 0;
+  max-width: 280px;
+  overflow: hidden;
 }
 .header-hotel:hover {
   border-color: var(--accent);
   color: var(--text-primary);
 }
+.header-hotel-emoji { font-size: 0.85rem; flex-shrink: 0; }
+.header-hotel-label { color: var(--text-secondary); font-size: 0.78rem; flex-shrink: 0; }
+.header-hotel-edit { color: var(--text-muted); font-size: 0.75rem; flex-shrink: 0; }
 .header-hotel-name {
   font-weight: 600;
   color: var(--accent);
-  max-width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex: 1;
+  min-width: 0;
 }
 
 .header-nav {
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  flex-shrink: 0;
 }
 
 .header-nav-btn {
@@ -138,6 +145,43 @@
 .header-nav-btn.active {
   background: var(--accent-light);
   color: var(--accent);
+}
+
+/* ─── Mobile Bottom Nav ─────────────────────────────────────────────────── */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+  justify-content: space-around;
+  align-items: center;
+}
+
+.mobile-nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: all var(--transition);
+}
+.mobile-nav-btn.active .mobile-nav-icon { transform: scale(1.15); }
+.mobile-nav-btn.active .mobile-nav-label { color: var(--accent); font-weight: 700; }
+.mobile-nav-icon { font-size: 1.3rem; line-height: 1; }
+.mobile-nav-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
 }
 
 /* ─── Dashboard Stats ───────────────────────────────────────────────────── */
@@ -176,13 +220,16 @@
   font-size: 1.3rem;
   flex-shrink: 0;
 }
-.stat-info { min-width: 0; }
+.stat-info { min-width: 0; flex: 1; }
 .stat-value {
   font-size: 1.35rem;
   font-weight: 800;
   color: var(--text-primary);
   letter-spacing: -0.02em;
   line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .stat-label {
   font-size: 0.78rem;
@@ -401,7 +448,7 @@
 
 .cart-item {
   display: grid;
-  grid-template-columns: 1fr auto auto auto;
+  grid-template-columns: 1fr auto auto auto auto;
   gap: var(--space-2);
   align-items: center;
   padding: 10px var(--space-5);
@@ -460,7 +507,7 @@
 
 .cart-table-header {
   display: grid;
-  grid-template-columns: 1fr auto auto auto;
+  grid-template-columns: 1fr auto auto auto auto;
   gap: var(--space-2);
   padding: 8px var(--space-5);
   font-size: 0.72rem;
@@ -553,7 +600,7 @@
 }
 
 .receipt-actions {
-  padding: var(--space-5) var(--space-6);
+  padding: var(--space-4) var(--space-5);
   border-top: 1px solid var(--border);
   display: flex;
   flex-wrap: wrap;
@@ -566,7 +613,7 @@
   color: #1a1a1a;
   font-family: "Inter", sans-serif;
   padding: 40px;
-  max-height: 70vh;
+  max-height: 62vh;
   overflow-y: auto;
 }
 
@@ -691,6 +738,56 @@
   gap: var(--space-4);
 }
 
+/* Mobile-only history cards */
+.history-cards { display: none; }
+
+.history-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.history-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+.history-card-invoice {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+.history-card-hotel {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+.history-card-total {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--success);
+  flex-shrink: 0;
+}
+.history-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.history-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
 /* ─── Product Manager ───────────────────────────────────────────────────── */
 .pm-view {
   padding: var(--space-4);
@@ -760,9 +857,9 @@
 .mobile-cart-bar {
   display: none;
   position: fixed;
-  bottom: 16px;
-  left: 16px;
-  right: 16px;
+  bottom: 70px; /* above bottom nav */
+  left: 12px;
+  right: 12px;
   z-index: 90;
   background: linear-gradient(135deg, #1e293b, #0f172a);
   border: 1.5px solid var(--accent);
@@ -810,13 +907,14 @@
   gap: 4px;
 }
 
-/* ─── Responsive Adjustments (Desktop, Mac, Tablet, Mobile) ────────────── */
+/* ─── Responsive: Large tablet (1100px) ─────────────────────────────────── */
 @media (max-width: 1100px) {
   .dashboard-stats {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
+/* ─── Responsive: Tablet (860px) ───────────────────────────────────────── */
 @media (max-width: 860px) {
   .billing-view {
     grid-template-columns: 1fr;
@@ -843,10 +941,16 @@
   }
 }
 
-@media (max-width: 600px) {
+/* ─── Responsive: Mobile (640px) ───────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Show mobile bottom nav, hide desktop nav */
+  .header-nav { display: none; }
+  .mobile-bottom-nav { display: flex; }
+
+  /* Shrink header */
   .header {
     padding: 0 var(--space-3);
-    height: 58px;
+    height: 56px;
   }
   .header-logo-icon {
     width: 32px;
@@ -854,22 +958,22 @@
     font-size: 1rem;
   }
   .header-brand {
-    display: none;
+    font-size: 1rem;
   }
   .header-hotel {
     padding: 4px 10px;
-    font-size: 0.78rem;
+    font-size: 0.75rem;
+    max-width: 170px;
   }
-  .header-hotel-name {
-    max-width: 90px;
+  .header-hotel-label { display: none; }
+  .header-hotel-name { max-width: 100px; }
+
+  /* Add bottom padding for nav bar */
+  .main-content {
+    padding-bottom: 62px;
   }
-  .header-nav {
-    gap: 4px;
-  }
-  .header-nav-btn {
-    padding: 6px 10px;
-    font-size: 0.8rem;
-  }
+
+  /* Dashboard */
   .dashboard-stats {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
@@ -878,31 +982,39 @@
   .stat-card {
     padding: var(--space-3);
     gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
   }
   .stat-icon {
     width: 36px;
     height: 36px;
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
   .stat-value {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
   .stat-label {
-    font-size: 0.7rem;
+    font-size: 0.66rem;
   }
+
+  /* Billing view */
   .billing-view {
     padding: var(--space-3);
     gap: var(--space-3);
+    padding-bottom: 150px;
   }
+
+  /* Product grid */
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 8px;
   }
   .product-card {
     padding: 12px;
   }
   .product-name {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
   }
   .product-price {
     font-size: 0.95rem;
@@ -914,6 +1026,23 @@
   .qty-input {
     width: 44px !important;
   }
+
+  /* Cart: make items more compact */
+  .cart-items { max-height: none; }
+  .cart-item {
+    grid-template-columns: 1fr auto auto auto;
+    padding: 8px var(--space-4);
+    gap: 6px;
+  }
+  .cart-item-qty { min-width: 30px; font-size: 0.78rem; }
+  .cart-rate-col { display: none !important; }
+  .cart-item-amount { min-width: 50px; font-size: 0.82rem; }
+  .cart-table-header {
+    grid-template-columns: 1fr auto auto auto;
+    padding: 6px var(--space-4);
+  }
+
+  /* History */
   .history-header {
     flex-direction: column;
     align-items: stretch;
@@ -922,16 +1051,65 @@
   .history-header .input {
     max-width: 100% !important;
   }
+  /* Hide table, show cards on mobile */
+  .history-table-wrap { display: none; }
+  .history-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Product manager */
+  .pm-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .pm-header > div { order: 1; }
+  .pm-header > button { order: 2; width: 100%; }
+
+  /* Receipt */
   #receipt-content {
     padding: 20px 16px !important;
+    max-height: 55vh;
   }
   .receipt-company {
     font-size: 1.3rem !important;
   }
   .receipt-actions {
-    flex-direction: column;
+    padding: var(--space-3) var(--space-4);
+    flex-direction: row;
+    flex-wrap: wrap;
   }
   .receipt-actions .btn {
-    width: 100%;
+    flex: 1;
+    min-width: calc(50% - 4px);
+    font-size: 0.8rem;
+    padding: 8px 10px;
   }
+  .receipt-meta {
+    grid-template-columns: 1fr 1fr;
+    font-size: 0.78rem;
+  }
+
+  /* Modal */
+  .modal-box {
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+
+/* ─── Responsive: Extra small (400px) ──────────────────────────────────── */
+@media (max-width: 400px) {
+  .header-brand { display: none; }
+  .header-hotel { max-width: 160px; }
+  .product-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .stat-card { padding: 10px; }
+  .stat-value { font-size: 0.95rem; }
+  .dashboard-stats { gap: 6px; }
+  .mobile-nav-btn { padding: 6px 14px; }
 }

@@ -361,6 +361,7 @@ tbody td {
   flex-direction: column;
   gap: var(--space-2);
   pointer-events: none;
+  max-width: calc(100vw - 32px);
 }
 .toast {
   display: flex;
@@ -426,5 +427,18 @@ tbody td {
 @media (max-width: 768px) {
   .modal-box {
     padding: var(--space-6);
+  }
+}
+
+@media (max-width: 640px) {
+  .toast-container {
+    bottom: 80px; /* above mobile bottom nav */
+    right: 12px;
+    left: 12px;
+  }
+  .toast {
+    min-width: unset;
+    width: 100%;
+    max-width: 100%;
   }
 }

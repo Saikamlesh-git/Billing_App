@@ -72,8 +72,9 @@ export default function Cart({ cart, hotelName, onQtyChange, onRemove, onClear, 
           <div className="cart-table-header">
             <span>Product</span>
             <span style={{ textAlign: "right" }}>Qty</span>
-            <span style={{ textAlign: "right" }}>Rate</span>
+            <span className="cart-rate-col" style={{ textAlign: "right" }}>Rate</span>
             <span style={{ textAlign: "right" }}>Amount</span>
+            <span></span>
           </div>
 
           {/* Items */}
@@ -85,7 +86,7 @@ export default function Cart({ cart, hotelName, onQtyChange, onRemove, onClear, 
                   <div className="cart-item-sub">{item.category}</div>
                 </div>
                 <div className="cart-item-qty">×{item.qty}</div>
-                <div className="cart-item-rate">₹{item.price}</div>
+                <div className="cart-item-rate cart-rate-col">₹{item.price}</div>
                 <div className="cart-item-amount">{formatCurrency(item.qty * item.price)}</div>
                 <button
                   className="cart-remove-btn"
