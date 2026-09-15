@@ -1,44 +1,42 @@
 /**
- * whatsapp.js — build a clean, well-aligned WhatsApp bill message
- * Uses only safe characters that render perfectly in WhatsApp
+ * whatsapp.js — professional WhatsApp bill message (no internal invoice numbers)
  */
 
 import { formatCurrency } from "./calculations.js";
 
 export function buildWhatsAppMessage(bill) {
-  // Pad a label and value so totals align nicely
-  const pad = (label, value, width = 22) =>
-    label.padEnd(width, " ") + value;
+  const divider = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+  const thin    = "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄";
 
-  // Format each item line clearly
   const itemLines = bill.items
     .map((item, i) => {
-      const num = String(i + 1).padStart(2, " ");
+      const n      = String(i + 1).padStart(2, " ");
       const amount = formatCurrency(item.qty * item.price);
-      return `  ${num}. ${item.name}\n      ${item.qty} × ${formatCurrency(item.price)} = *${amount}*`;
+      return `  ${n}. ${item.name}\n      ${item.qty} × ${formatCurrency(item.price)} = *${amount}*`;
     })
     .join("\n");
 
-  const divider = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
-  const thinLine = "─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─";
+  // Only show discount line if there is one
+  const discountLine = bill.discount > 0
+    ? `💸 *Discount:*   - ${formatCurrency(bill.discount)}\n`
+    : "";
 
   const msg =
 `🛍️ *CARRY BILLING*
 _Hotel Essentials & Supplies_
 ${divider}
 
-🧾 *Invoice:*  ${bill.invoiceNo}
-📅 *Date:*     ${bill.date}
-🕐 *Time:*     ${bill.time}
-🏨 *Hotel:*    ${bill.hotelName}
+📅 *Date:*   ${bill.date}
+🕐 *Time:*   ${bill.time}
+🏨 *Hotel:*  ${bill.hotelName}
 
-${thinLine}
+${thin}
 📦 *ITEMS:*
 ${itemLines}
 
 ${divider}
-${pad("Subtotal:", formatCurrency(bill.subtotal))}
-${bill.discount > 0 ? pad("Discount:", `- ${formatCurrency(bill.discount)}`) + "\n" : ""}*${pad("TOTAL:", formatCurrency(bill.total))}*
+🧮 *Subtotal:*  ${formatCurrency(bill.subtotal)}
+${discountLine}✅ *TOTAL:     ${formatCurrency(bill.total)}*
 ${divider}
 
 🙏 _Thank you for your business!_
@@ -48,7 +46,7 @@ _Carry Billing — Hotel Essentials & Supplies_`;
 }
 
 export function openWhatsApp(bill) {
-  const msg = buildWhatsAppMessage(bill);
+  const msg     = buildWhatsAppMessage(bill);
   const encoded = encodeURIComponent(msg);
   window.open(`https://wa.me/?text=${encoded}`, "_blank");
 }

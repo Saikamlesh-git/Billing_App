@@ -751,6 +751,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  height: fit-content;
 }
 
 .history-header {
@@ -819,6 +820,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  height: fit-content;
 }
 
 .pm-header {
@@ -883,11 +885,11 @@
   left: 12px;
   right: 12px;
   z-index: 90;
-  background: linear-gradient(135deg, #1e293b, #0f172a);
-  border: 1.5px solid var(--accent);
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  border: 1.5px solid #1d4ed8;
   border-radius: var(--radius-full);
   padding: 10px 18px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(79, 124, 255, 0.3);
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.35);
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
@@ -911,15 +913,15 @@
 
 .mobile-cart-total {
   font-weight: 800;
-  color: var(--rupee);
+  color: #fff;
   font-family: var(--font-mono);
   font-size: 1rem;
 }
 
 .mobile-cart-cta {
-  background: var(--accent);
+  background: rgba(255,255,255,0.2);
   color: #fff;
-  border: none;
+  border: 1px solid rgba(255,255,255,0.3);
   border-radius: var(--radius-full);
   padding: 7px 14px;
   font-size: 0.82rem;
@@ -1059,37 +1061,46 @@
   /* Product grid */
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    gap: 6px;
   }
   .product-card {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 8px;
+    gap: 6px;
     border-radius: var(--radius-md);
   }
   .product-category {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.02em;
   }
   .product-name {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 700;
+    line-height: 1.2;
   }
   .product-price {
-    font-size: 0.92rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    margin: 4px 0;
+    margin: 2px 0;
+  }
+  .qty-controls {
+    gap: 4px;
   }
   .qty-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 0.9rem;
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+    border-radius: 4px;
   }
   .qty-input {
-    width: 40px !important;
-    height: 32px;
-    font-size: 0.82rem;
+    width: 32px !important;
+    height: 26px;
+    font-size: 0.75rem;
     padding: 0 !important;
+    min-width: 0;
+  }
+  .add-btn {
+    padding: 5px 6px;
+    font-size: 0.72rem;
   }
 
   /* Cart: make items more compact */
