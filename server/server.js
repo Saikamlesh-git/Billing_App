@@ -1,6 +1,5 @@
 /**
- * server/server.js — Free lightweight sync server for Render deployment
- * Works with SQLite / JSON store out of the box, or PostgreSQL via DATABASE_URL
+ * server/server.js — Production Sync Server for Render Deployment
  */
 
 import express from "express";
@@ -51,6 +50,11 @@ function saveData(data) {
     console.error("Failed to save data:", err);
   }
 }
+
+// ─── Health Check for Render ────────────────────────────────────────────────
+app.get("/healthz", (req, res) => {
+  res.status(200).send("OK");
+});
 
 // ─── API Routes ─────────────────────────────────────────────────────────────
 
@@ -117,15 +121,28 @@ app.post("/api/hotel", (req, res) => {
   res.json({ success: true, hotelName: data.hotelName });
 });
 
-// Serve frontend static files if built (for all-in-one Render deployment)
-const distPath = path.join(__dirname, "../dist");
-if (fs.existsSync(distPath)) {
-  app.use(express.static(distPath));
+// ─── Static Files & SPA Fallback ────────────────────────────────────────────
+// Check dist directory at both relative and process.cwd() locations
+const possibleDist = [
+  path.join(__dirname, "../dist"),
+  path.join(process.cwd(), "dist"),
+];
+
+let distDir = possibleDist.find((p) => fs.existsSync(p));
+
+if (distDir) {
+  app.use(express.static(distDir));
   app.use((req, res) => {
-    res.sendFile(path.join(distPath, "index.html"));
+    res.sendFile(path.join(distDir, "index.html"));
+  });
+} else {
+  // Fallback if dist isn't built yet
+  app.get("/", (req, res) => {
+    res.send("Carry Billing API is running. Build frontend with `npm run build`.");
   });
 }
 
-app.listen(PORT, () => {
-  console.log(`Carry Billing Sync Server running on port ${PORT}`);
+// Bind to 0.0.0.0 explicitly for Render container routing
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Carry Billing Server running on port ${PORT} (0.0.0.0)`);
 });
