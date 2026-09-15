@@ -1117,10 +1117,18 @@
   .header-nav { display: none; }
   .mobile-bottom-nav { display: flex; }
 
-  /* Shrink header */
+  /* Mobile Header */
   .header {
-    padding: 0 var(--space-3);
-    height: 56px;
+    padding: 10px 12px 8px;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .header-logo {
+    order: 1;
   }
   .header-logo-icon {
     width: 32px;
@@ -1130,13 +1138,32 @@
   .header-brand {
     font-size: 1rem;
   }
-  .header-hotel {
-    padding: 4px 10px;
-    font-size: 0.75rem;
-    max-width: 170px;
+  .header > div:last-child {
+    order: 2;
   }
-  .header-hotel-label { display: none; }
-  .header-hotel-name { max-width: 100px; }
+  .header-hotel {
+    order: 3;
+    width: 100%;
+    max-width: 100% !important;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin: 0;
+  }
+  .header-hotel-label {
+    display: inline !important;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+  }
+  .header-hotel-name {
+    max-width: none !important;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
 
   /* Add bottom padding for nav bar */
   .main-content {
@@ -1340,7 +1367,6 @@
 /* ─── Responsive: Extra small (400px) ──────────────────────────────────── */
 @media (max-width: 400px) {
   .header-brand { display: none; }
-  .header-hotel { max-width: 160px; }
   .product-grid {
     grid-template-columns: 1fr 1fr;
     gap: 6px;
