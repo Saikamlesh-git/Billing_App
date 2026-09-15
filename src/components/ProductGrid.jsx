@@ -25,7 +25,7 @@ export default function ProductGrid({ products, categories, cart, onQtyChange, o
   const getCartItem = (productId) => cart.find((c) => c.id === productId);
 
   return (
-    <div className="billing-left">
+    <div className="product-catalog">
       {/* Search + Category toolbar */}
       <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         <div className="search-bar-wrap">

@@ -197,23 +197,23 @@ export default function App() {
       <main className="main-content">
         {activeView === "billing" && (
           <>
-            {/* Top Dashboard Summary Stats */}
-            <Dashboard
-              billingHistory={history}
-              products={products}
-              onNewBill={handleStartNewBill}
-            />
-
             {/* Billing Main Workspace */}
             <div className="billing-view">
-              {/* Left Column: Search, Category Tabs, Product Cards */}
-              <ProductGrid
-                products={products}
-                categories={categories}
-                cart={cart}
-                onQtyChange={handleQtyChange}
-                onAdd={handleAddToCart}
-              />
+              {/* Left Column: Dashboard Stats, Search, Category Tabs, Product Cards */}
+              <div className="billing-left">
+                <Dashboard
+                  billingHistory={history}
+                  products={products}
+                  onNewBill={handleStartNewBill}
+                />
+                <ProductGrid
+                  products={products}
+                  categories={categories}
+                  cart={cart}
+                  onQtyChange={handleQtyChange}
+                  onAdd={handleAddToCart}
+                />
+              </div>
 
               {/* Right Column: Interactive Cart & Checkout Panel */}
               <div className="billing-right">

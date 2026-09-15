@@ -292,15 +292,15 @@ export default function ProductManager({
               <div className="text-sm text-muted">Try a different search or add a new product.</div>
             </div>
           ) : (
-            <div className="table-wrap">
-              <table>
+            <div className="table-wrap pm-table-wrap">
+              <table className="pm-table">
                 <thead>
                   <tr>
-                    <th>Product Name</th>
-                    <th>Category</th>
-                    <th>Unit</th>
-                    <th style={{ textAlign: "right" }}>Rate (₹)</th>
-                    <th style={{ textAlign: "center" }}>Actions</th>
+                    <th style={{ width: "35%" }}>Product Name</th>
+                    <th style={{ width: "22%" }}>Category</th>
+                    <th style={{ width: "15%" }}>Unit</th>
+                    <th style={{ width: "13%", textAlign: "right" }}>Rate (₹)</th>
+                    <th style={{ width: "15%", textAlign: "center" }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -27,77 +27,93 @@ export default function BillingHistory({ history, onHistoryChange }) {
     <div className="history-view">
       <div className="history-header">
         <div>
-          <h2 style={{ fontWeight: 800, fontSize: "1.3rem" }}>📋 Billing History</h2>
-          <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem", marginTop: 2 }}>
-            Last {history.length} completed bill{history.length !== 1 ? "s" : ""} (max 30)
+          <h2 style={{ fontWeight: 800, fontSize: "1.35rem", letterSpacing: "-0.02em" }}>
+            📋 Billing History
+          </h2>
+          <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem", marginTop: 4 }}>
+            Showing {filtered.length} of {history.length} completed bill{history.length !== 1 ? "s" : ""}
           </p>
         </div>
-        <input
-          className="input"
-          style={{ maxWidth: 280 }}
-          placeholder="Search by invoice or hotel..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className="search-bar-wrap" style={{ minWidth: 260, maxWidth: 320 }}>
+          <span className="search-icon">🔍</span>
+          <input
+            className="input search-input"
+            placeholder="Search invoice or hotel..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </div>
 
       {filtered.length === 0 ? (
         <div className="empty-state" style={{ padding: "60px 0" }}>
           <span style={{ fontSize: "3rem" }}>📋</span>
           <div>
-            <div style={{ fontWeight: 600 }}>{search ? "No matching records" : "No billing history yet"}</div>
-            <div className="text-sm text-muted">
-              {search ? `No bills matching "${search}"` : "Generate bills to see them here"}
+            <div style={{ fontWeight: 600, fontSize: "1.05rem" }}>
+              {search ? "No matching records found" : "No billing history yet"}
+            </div>
+            <div className="text-sm text-muted" style={{ marginTop: 4 }}>
+              {search ? `No bills found for "${search}"` : "Generated bills will appear here automatically"}
             </div>
           </div>
         </div>
       ) : (
         <>
-          {/* Desktop table */}
+          {/* Desktop full-width professional table */}
           <div className="table-wrap history-table-wrap">
-            <table>
+            <table className="history-table">
               <thead>
                 <tr>
-                  <th>Invoice No</th>
-                  <th>Hotel</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Items</th>
-                  <th style={{ textAlign: "right" }}>Total</th>
-                  <th style={{ textAlign: "center" }}>Actions</th>
+                  <th style={{ width: "18%" }}>Invoice No</th>
+                  <th style={{ width: "26%" }}>Hotel / Customer</th>
+                  <th style={{ width: "20%" }}>Date &amp; Time</th>
+                  <th style={{ width: "12%" }}>Items</th>
+                  <th style={{ width: "12%", textAlign: "right" }}>Total</th>
+                  <th style={{ width: "12%", textAlign: "center" }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((bill) => (
                   <tr key={bill.invoiceNo}>
                     <td>
-                      <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.82rem", color: "var(--accent)", fontWeight: 600 }}>
+                      <span className="table-invoice-tag">
                         {bill.invoiceNo}
                       </span>
                     </td>
-                    <td style={{ fontWeight: 600 }}>{bill.hotelName}</td>
-                    <td style={{ color: "var(--text-secondary)" }}>{bill.date}</td>
-                    <td style={{ color: "var(--text-secondary)" }}>{bill.time}</td>
                     <td>
-                      <span className="badge badge-accent">{bill.items.length} items</span>
-                    </td>
-                    <td style={{ textAlign: "right", fontWeight: 700, color: "var(--success)", fontFamily: "var(--font-mono)" }}>
-                      {formatCurrency(bill.total)}
+                      <span className="table-hotel-name">{bill.hotelName}</span>
                     </td>
                     <td>
-                      <div style={{ display: "flex", gap: 6, justifyContent: "center" }}>
+                      <div className="table-datetime">
+                        <span className="table-date">📅 {bill.date}</span>
+                        <span className="table-time">🕐 {bill.time}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <span className="badge badge-accent">
+                        {bill.items.length} {bill.items.length === 1 ? "item" : "items"}
+                      </span>
+                    </td>
+                    <td style={{ textAlign: "right" }}>
+                      <span className="table-total-amount">
+                        {formatCurrency(bill.total)}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="table-actions">
                         <button
-                          className="btn btn-outline btn-sm"
+                          className="btn btn-outline btn-sm table-btn"
                           onClick={() => setViewBill(bill)}
+                          title="View Receipt"
                         >
-                          View
+                          👁 View
                         </button>
                         <button
-                          className="btn btn-sm"
-                          style={{ background: "var(--danger-light)", color: "var(--danger)", border: "1px solid transparent" }}
+                          className="btn btn-sm table-btn-delete"
                           onClick={() => setDeleteTarget(bill)}
+                          title="Delete Bill"
                         >
-                          Delete
+                          🗑 Delete
                         </button>
                       </div>
                     </td>
@@ -158,6 +174,8 @@ export default function BillingHistory({ history, onHistoryChange }) {
         <ConfirmDialog
           title="Delete billing record?"
           message={`This will permanently remove bill ${deleteTarget.invoiceNo} for ${deleteTarget.hotelName}. This action cannot be undone.`}
+          confirmLabel="Delete"
+          isDanger={true}
           onConfirm={handleDelete}
           onCancel={() => setDeleteTarget(null)}
         />

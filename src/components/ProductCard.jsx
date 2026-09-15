@@ -53,50 +53,7 @@ export default function ProductCard({ product, cartItem, onQtyChange, onAdd }) {
         {formatCurrency(product.price)}
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        <div className="qty-controls">
-          <button
-            className="qty-btn"
-            onClick={handleMinus}
-            disabled={currentQty <= 0}
-            title="Decrease"
-          >
-            −
-          </button>
-
-          {editing ? (
-            <input
-              ref={inputRef}
-              className="input qty-input"
-              type="number"
-              min="0"
-              value={inputVal}
-              onChange={(e) => setInputVal(e.target.value)}
-              onBlur={commitInput}
-              onKeyDown={handleKeyDown}
-            />
-          ) : (
-            <button
-              className="qty-input input"
-              style={{
-                cursor: "text",
-                background: inCart ? "var(--success-light)" : "var(--bg-input)",
-                borderColor: inCart ? "var(--success)" : "var(--border)",
-                color: inCart ? "var(--success)" : "var(--text-primary)",
-                fontWeight: 700,
-              }}
-              onClick={handleQtyClick}
-              title="Click to type quantity"
-            >
-              {currentQty}
-            </button>
-          )}
-
-          <button className="qty-btn" onClick={handlePlus} title="Increase">
-            +
-          </button>
-        </div>
-
+      <div className="product-card-footer">
         {!inCart ? (
           <button
             className="btn btn-outline btn-sm add-btn"
@@ -105,13 +62,47 @@ export default function ProductCard({ product, cartItem, onQtyChange, onAdd }) {
             + Add
           </button>
         ) : (
-          <button
-            className="btn btn-ghost btn-sm add-btn"
-            onClick={() => onQtyChange(product.id, 0)}
-            style={{ color: "var(--danger)", borderColor: "var(--danger-light)" }}
-          >
-            Remove
-          </button>
+          <div className="qty-controls">
+            <button
+              className="qty-btn"
+              onClick={handleMinus}
+              title="Decrease"
+            >
+              −
+            </button>
+
+            {editing ? (
+              <input
+                ref={inputRef}
+                className="input qty-input"
+                type="number"
+                min="0"
+                value={inputVal}
+                onChange={(e) => setInputVal(e.target.value)}
+                onBlur={commitInput}
+                onKeyDown={handleKeyDown}
+              />
+            ) : (
+              <button
+                className="qty-input input"
+                style={{
+                  cursor: "text",
+                  background: "var(--success-light)",
+                  borderColor: "var(--success)",
+                  color: "var(--success)",
+                  fontWeight: 700,
+                }}
+                onClick={handleQtyClick}
+                title="Click to type quantity"
+              >
+                {currentQty}
+              </button>
+            )}
+
+            <button className="qty-btn" onClick={handlePlus} title="Increase">
+              +
+            </button>
+          </div>
         )}
       </div>
     </div>
