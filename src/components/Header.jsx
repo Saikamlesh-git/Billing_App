@@ -1,9 +1,25 @@
+import { useState, useEffect } from "react";
+
 export default function Header({ hotelName, activeView, onChangeHotel, onViewChange }) {
   const navItems = [
     { key: "billing", label: "Billing", icon: "🧾" },
     { key: "history", label: "History", icon: "📋" },
     { key: "products", label: "Products", icon: "📦" },
   ];
+
+  // Theme: "dark" or "light"
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("cb_theme") || "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("cb_theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
 
   return (
     <>
@@ -24,19 +40,31 @@ export default function Header({ hotelName, activeView, onChangeHotel, onViewCha
           </div>
         )}
 
-        {/* Desktop Nav */}
-        <nav className="header-nav">
-          {navItems.map((item) => (
-            <button
-              key={item.key}
-              className={`header-nav-btn ${activeView === item.key ? "active" : ""}`}
-              onClick={() => onViewChange(item.key)}
-            >
-              <span>{item.icon}</span>
-              <span>{item.label}</span>
-            </button>
-          ))}
-        </nav>
+        {/* Desktop Nav + Theme Toggle */}
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <nav className="header-nav">
+            {navItems.map((item) => (
+              <button
+                key={item.key}
+                className={`header-nav-btn ${activeView === item.key ? "active" : ""}`}
+                onClick={() => onViewChange(item.key)}
+              >
+                <span>{item.icon}</span>
+                <span>{item.label}</span>
+              </button>
+            ))}
+          </nav>
+
+          {/* Theme Toggle Button */}
+          <button
+            className="theme-toggle-btn"
+            onClick={toggleTheme}
+            title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? "☀️" : "🌙"}
+          </button>
+        </div>
       </header>
 
       {/* Mobile Bottom Nav */}
@@ -51,6 +79,15 @@ export default function Header({ hotelName, activeView, onChangeHotel, onViewCha
             <span className="mobile-nav-label">{item.label}</span>
           </button>
         ))}
+        {/* Theme toggle in mobile nav too */}
+        <button
+          className="mobile-nav-btn"
+          onClick={toggleTheme}
+          title="Toggle theme"
+        >
+          <span className="mobile-nav-icon">{theme === "dark" ? "☀️" : "🌙"}</span>
+          <span className="mobile-nav-label">{theme === "dark" ? "Light" : "Dark"}</span>
+        </button>
       </nav>
     </>
   );

@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
 
 :root {
-  /* Color Palette — Dark Slate + Amber accent */
+  /* Color Palette — Dark Slate + Blue accent (default dark) */
   --bg-base: #0f1117;
   --bg-surface: #161b27;
   --bg-card: #1e2535;
@@ -60,6 +60,41 @@
   /* Transitions */
   --transition: 0.18s ease;
   --transition-slow: 0.3s ease;
+}
+
+/* ─── Light Theme ───────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg-base: #f0f4ff;
+  --bg-surface: #ffffff;
+  --bg-card: #f8faff;
+  --bg-card-hover: #eef2ff;
+  --bg-input: #ffffff;
+  --bg-modal: #ffffff;
+
+  --border: #d1d9f0;
+  --border-focus: #4f7cff;
+
+  --accent: #3d6de0;
+  --accent-hover: #2c5ccb;
+  --accent-light: rgba(79, 124, 255, 0.10);
+
+  --success: #16a34a;
+  --success-light: rgba(22, 163, 74, 0.10);
+  --danger: #dc2626;
+  --danger-light: rgba(220, 38, 38, 0.10);
+  --warning: #d97706;
+  --warning-light: rgba(217, 119, 6, 0.10);
+
+  --text-primary: #0f1117;
+  --text-secondary: #4a5568;
+  --text-muted: #94a3b8;
+
+  --rupee: #16a34a;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.18);
+  --shadow-accent: 0 4px 20px rgba(79, 124, 255, 0.20);
 }
 
 /* ─── Reset ─────────────────────────────────────────────────────────────── */

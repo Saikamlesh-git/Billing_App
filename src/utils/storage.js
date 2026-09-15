@@ -170,21 +170,49 @@ export async function syncFromCloud(onSync) {
     if (!res.ok) return;
     const remote = await res.json();
 
+    const local = {
+      products: getProducts(),
+      categories: getCategories(),
+      history: getBillingHistory(),
+      hotelName: getHotelName(),
+    };
+
     let updated = false;
 
-    if (remote.products && remote.products.length > 0) {
+    // Only overwrite products if remote has data AND more items than local
+    if (remote.products && remote.products.length > 0 &&
+        remote.products.length >= local.products.length) {
       localStorage.setItem(KEYS.PRODUCTS, JSON.stringify(remote.products));
       updated = true;
     }
+
+    // Only overwrite categories if remote has data
     if (remote.categories && remote.categories.length > 0) {
       localStorage.setItem(KEYS.CATEGORIES, JSON.stringify(remote.categories));
       updated = true;
     }
+
+    // Merge history: combine remote + local, deduplicate by invoiceNo, sort newest first
     if (remote.history && Array.isArray(remote.history)) {
-      localStorage.setItem(KEYS.HISTORY, JSON.stringify(remote.history.slice(0, MAX_HISTORY)));
-      updated = true;
+      const combined = [...remote.history, ...local.history];
+      const seen = new Set();
+      const merged = combined
+        .filter((b) => {
+          if (seen.has(b.invoiceNo)) return false;
+          seen.add(b.invoiceNo);
+          return true;
+        })
+        .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+        .slice(0, MAX_HISTORY);
+
+      if (merged.length >= local.history.length) {
+        localStorage.setItem(KEYS.HISTORY, JSON.stringify(merged));
+        updated = true;
+      }
     }
-    if (remote.hotelName) {
+
+    // Only update hotel name if remote has one and local doesn't
+    if (remote.hotelName && !local.hotelName) {
       localStorage.setItem(KEYS.HOTEL_NAME, remote.hotelName);
       updated = true;
     }
